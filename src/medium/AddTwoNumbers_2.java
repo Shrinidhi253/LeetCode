@@ -10,10 +10,7 @@ public class AddTwoNumbers_2 {
     //if the sum is >= 10, the carry over = sum / 10, and the sum node value = sum % 10
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode resultHead = new ListNode();
-        addTwoNumbersHelper(l1, l2, resultHead, 0);
-
-        return resultHead;
+        return addTwoNumbersHelper(l1, l2, new ListNode(), 0);
     }
 
     public ListNode addTwoNumbersHelper(ListNode l1, ListNode l2, ListNode resultNode, int carry) {
