@@ -3,7 +3,7 @@ package medium;
 import java.util.Hashtable;
 
 public class LongestSubstring_3 {
-    public static int lengthOfLongestSubstringSolution2(String s) {
+    public int lengthOfLongestSubstringSolution2(String s) {
         int seqStart = 0, seqEnd = 0; //Pointers for the beginning and end of the sequence being considered
         int n = s.length();
 
