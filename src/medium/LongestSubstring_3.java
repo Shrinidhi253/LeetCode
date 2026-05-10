@@ -3,6 +3,40 @@ package medium;
 import java.util.Hashtable;
 
 public class LongestSubstring_3 {
+    public static int lengthOfLongestSubstringSolution2(String s) {
+        int seqStart = 0, seqEnd = 0; //Pointers for the beginning and end of the sequence being considered
+        int n = s.length();
+
+        Hashtable<Character, Integer> sequence = new Hashtable<>(); //build a single table with the latest index of the elements
+
+        int longestSeqLen = 0;
+        int currentSeqLen = 0;
+
+        while (seqStart < n && seqEnd < n && (n - seqStart) > longestSeqLen) {
+            if (sequence.containsKey(s.charAt(seqEnd))) { //if the current element has already occurred in the string at some point
+                int matchedInd = sequence.get(s.charAt(seqEnd)); //check if the element is within the current sequence range (i.e. between seqStart and seqEnd)
+
+                if (matchedInd >= seqStart) { //the detected duplicate element is within the sequence being considered
+                    seqStart = matchedInd + 1; //start the next sequence after the matched index (like in solution1)
+                }
+            }
+
+            sequence.put(s.charAt(seqEnd), seqEnd); //add the element/ or update its latest index
+            //updating latest index means that we uniquely consider the element in context of a particular sequence
+            //we don't have to worry about the element outside the current sequence, since we have already removed that from consideration
+            //by updating the latest index
+
+            currentSeqLen = seqEnd - seqStart + 1; //the current sequence length is determined by the end index and start index of the sequence since we are not redoing the loop like in solution1
+            seqEnd++; //we are not resetting the seqEnd to startInd (or seqStart) like in solution1 because we already know that the values between seqStart and seqEnd are unique.
+            //we can avoid redundant/ repeated comparisons this way.
+
+            if (currentSeqLen > longestSeqLen) { //update longest sequence length accordingly
+                longestSeqLen = currentSeqLen;
+            }
+        }
+        return longestSeqLen;
+    }
+
     public int lengthOfLongestSubstringSolution1(String s) {
         int startInd = 0, n = s.length();
         int longestSeqLen = 0;
