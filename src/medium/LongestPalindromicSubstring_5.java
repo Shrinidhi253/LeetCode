@@ -103,4 +103,58 @@ public class LongestPalindromicSubstring_5 {
         }
         return s.substring(longestStart, longestEnd + 1);
     }
+
+    /*
+    Removing storing of boolean values in an array since that is O(n^2) memory
+    Idea: Instead of starting from the edges and converging towards the center of the palindrome (if there is a palindrome),
+    start from the different possible centers of the palindrome and go outward.
+    This way, you get the start and end indices of the palindrome directly.
+     */
+    public String longestPalindromeSolution3(String s) {
+        int n = s.length();
+        int longestLen = 0, longestStart = 0, longestEnd = 0;
+
+        for (int i = 0; i < n; i++) {
+            int[] oddLengthPalindrome = findPalindromeOutward(s, i, i);
+            int oddPalindromeStart = oddLengthPalindrome[0];
+            int oddPalindromeEnd = oddLengthPalindrome[1];
+
+            if (oddPalindromeEnd - oddPalindromeStart + 1 > longestLen) {
+                longestLen = oddPalindromeEnd - oddPalindromeStart + 1;
+                longestStart = oddPalindromeStart;
+                longestEnd = oddPalindromeEnd;
+            }
+
+            int[] evenLengthPalindrome = findPalindromeOutward(s, i, i + 1);
+            int evenPalindromeStart = evenLengthPalindrome[0];
+            int evenPalindromeEnd = evenLengthPalindrome[1];
+
+            if (evenPalindromeEnd - evenPalindromeStart + 1 > longestLen) {
+                longestLen = evenPalindromeEnd - evenPalindromeStart + 1;
+                longestStart = evenPalindromeStart;
+                longestEnd = evenPalindromeEnd;
+            }
+        }
+        return s.substring(longestStart, longestEnd + 1);
+    }
+
+    private int[] findPalindromeOutward(String s, int left, int right) {
+        int n =  s.length();
+        int palindromeStart = left;
+        int palindromeEnd = right;
+
+        //for each center index left and right, compare the indices after them
+        //for e.g. in "babbabc" if left = 2, right = 3, keep checking 1 = 4, 0 = 5 ..
+        //the values of left and right where the loop stops will be the start and end index of the longest palindrome found for these values of left and right
+        //for e.g. in babbabc, 0 = 5 will be the last check. so string[0:5] is a palindrome
+
+        while (palindromeStart >= 0 &&
+                palindromeEnd < n &&
+                s.charAt(palindromeStart) == s.charAt(palindromeEnd)) {
+
+            palindromeStart--;
+            palindromeEnd++;
+        }
+        return new int[]{palindromeStart+1, palindromeEnd-1};
+    }
 }
