@@ -59,4 +59,48 @@ public class LongestPalindromicSubstring_5 {
         }
         return s.substring(longestStart, longestEnd + 1);
     }
+
+    /*
+    Boolean[][] would store an array of Boolean objects instead of "boolean" values
+    so switching to boolean[][] would reduce time taken to look up Boolean objects
+    All values will be initialised to false
+    So when you are looking up for invalid ranges, e.g. like string[4:3] = palindromes[4][3], you will get false instead of null
+    +
+    Simplifying the ifs:
+        1. case 1: start == end
+        2. case 2: start + 1 <= end - 1
+            possible when end - start >= 2
+            i.e when there is at least 1 value in between start and end
+        3. case 3: start + 1 > end - 1
+            possible when end - start < 2
+            i.e. when end = start + 1
+            end = start <- same as case 1 (so this and case 1 can be combined)
+     */
+
+    public String longestPalindromeSolution2(String s) {
+        int n = s.length();
+        boolean[][] palindromes = new boolean[n][n];
+        int longestLen = 0, longestStart = 0, longestEnd = 0;
+
+        for (int start = n-1; start >= 0; start--) {
+            for (int end = start; end < n; end++) {
+                boolean check1 = (s.charAt(start) == s.charAt(end)); //check if the start character = end character
+
+                if (start + 1 > end - 1) { //there is 0 or 1 values between start and end
+                    palindromes[start][end] = check1;
+                }
+                else {
+                    boolean check2 = palindromes[start + 1][end - 1];
+                    palindromes[start][end] = (check1 && check2);
+                }
+
+                if (palindromes[start][end] && (end - start + 1) > longestLen) {
+                    longestLen = end - start + 1;
+                    longestStart = start;
+                    longestEnd = end;
+                }
+            }
+        }
+        return s.substring(longestStart, longestEnd + 1);
+    }
 }
