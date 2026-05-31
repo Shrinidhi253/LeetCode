@@ -1,0 +1,45 @@
+name: "Update topic stats" #This is just a display name for the workflow action
+
+#AIM: to automatically update the statistics of how many
+#questions in each difficulty level, and each topic have been solved.
+#These stats are written to a JSON file called "stats.json" for visualising them later.
+
+#tells when to trigger the action (when an issue is closed)
+on:
+  issues:
+    types: [closed]
+
+  workflow_dispatch: #adding it temporarily to trigger the action manually for testing.
+  #TODO: remove workflow_dispatch before merging to main
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest #runner for this job
+
+    permissions:
+      contents: write #the action by default has R/O permission. Since we want to commit changes to the stats.json, we need to give write permission
+
+    steps:
+      - name: Checkout repo #name for the step
+        uses: actions/checkout@v4 #pre-built action. Clones the repo on the runner machine and checkouts to the default branch (which is main)
+
+      - name: Install API requests dependencies
+        run: pip install requests
+
+      - name: Build stats.json
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}} #get and add the GITHUB_TOKEN to env for the python script to read it
+        run: python .github/scripts/build_stats.py
+
+      #Using the github-actions[bot] to commit the changes to make it explicit that the commit has been automated
+      - name: Commit and push stats.json
+        run: | #use "|" if there is a multiline block of code to run
+          git config user.email "github-actions[bot]@users.noreply.com"
+          git config user.name "github-actions[bot]"
+          git add docs/stats.json
+          git diff --cached --quiet || git commit -m "chore: update stats.json [skip ci]"
+          git push
+
+      #git diff --cached --quiet returns 0 (true, success if there are no changes), and 1  (false, fail if there are new changes)
+      #the OR "||" commits only if the git diff fails, i.e. there are new changes to commit. Otherwise, nothing gets committed
+      #the [skip ci] in the commit message tells github to not trigger any workflow for this commit as it was automated.
