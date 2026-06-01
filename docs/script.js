@@ -104,7 +104,7 @@ class Chart {
     setMargins() {
         this.margins = {
             top : 20, //temp values for margins for testing purposes. TODO change it later if needed
-            right : 20,
+            right : 110,
             bottom : 100,
             left : 40
         }
@@ -143,6 +143,25 @@ class Chart {
                      .attr("dx", "-0.9em")   // shift left
                      .attr("dy", "0.15em")
                      .style("text-anchor", "end"); //align the text to the end 
+
+        //X axis label
+        this.svgChart.append("text")
+                     .attr("x", this.DYNAMIC_WIDTH + this.margins.left + 12)
+                     .attr("y", this.HEIGHT + 3)
+                     .style("text-anchor", "middle")
+                     .text("Topics I have solved")
+                     .style("font-size", '12px')
+                     .style("font-weight", "bold");
+
+        //Y axis label
+        this.svgChart.append("text")
+                     .attr("transform", "rotate(-90)")  //rotating the axis label to vertical
+                     .attr("x", -(this.HEIGHT / 2))     //to center it along the y axis (we rotated the label's axes by 90. So the "x" changes y position)
+                     .attr("y", -30)                    //move it to the left of the y axis
+                     .style("text-anchor", "middle")
+                     .text("No. of questions solved (by difficulty)")
+                     .style("font-size", '12px')
+                     .style("font-weight", "bold");
                      
 
         //Draw the ticks and texts for the y axis
