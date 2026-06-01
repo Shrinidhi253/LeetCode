@@ -47,10 +47,10 @@ def categorise_closed_issues(all_closed_issues):
             stats["difficultySummary"][difficulty] += 1
 
         for topic in topics: #increment count of questions solved for a difficulty level in this topic
-            if topic not in stats:
-                stats[topic] = {"easy" : 0, "medium" : 0, "hard" : 0}
+            if topic not in stats["topics"]:
+                stats["topics"][topic] = {"easy" : 0, "medium" : 0, "hard" : 0}
             if difficulty:
-                stats[topic][difficulty] += 1
+                stats["topics"][topic][difficulty] += 1
 
     return stats
 
