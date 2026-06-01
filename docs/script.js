@@ -81,6 +81,7 @@ class Chart {
     margins;
     xScale; yScale;
     DYNAMIC_WIDTH; //for making the chart scrollable
+    hoverAnimation;
     BAR_WIDTH = 15;
     BAR_PADDING = 0.2;
 
@@ -95,6 +96,7 @@ class Chart {
         this.createSvgChartArea();
         this.createScales();
         this.drawAxes();
+        this.addHoverAnimation();
         this.drawBars();
     }
 
@@ -186,6 +188,34 @@ class Chart {
                 offset += count
             })
         })
+
+        //Add hovering animation to the bars
+        groups.on("mousemove", function(event, data) {
+            d3.select(".hoverAnimation")
+              .style("opacity", 1) //increasing opacity to make the container visible
+              .style("left", (event.clientX + 14) + "px") //14px left of the bar
+              .style("top", (event.clientY - 10) + "px") //10 px above the bar
+              .html(`
+                <strong>${data.topic}</strong><br>
+                Easy: ${data.easy}<br> 
+                Medium: ${data.medium}<br>
+                Hard: ${data.hard}<br>
+                <hr>
+                Total: ${data.total}
+                `)
+            })
+            .on("mouseleave", function() {
+                d3.select(".hoverAnimation")
+                  .style("opacity", 0) //hide the container when the mouse is moved away from the bar
+            })
+    }
+
+    addHoverAnimation() {
+        this.hoverAnimation = d3.select("body")
+                                .append("div")
+                                .attr("class", "hoverAnimation")
+                                .style("position", "fixed")
+                                .style("opacity", 0); //setting opacity to 0 hides the div container by default
     }
 }
 
