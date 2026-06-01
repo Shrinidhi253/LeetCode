@@ -130,12 +130,20 @@ class Chart {
         //Draw the ticks and texts for the x axis
         this.svgChart.append("g") //Create a group element for the x axis labels
                      .attr("transform", `translate(0, ${this.HEIGHT})`) //position HEIGHT pixels down on the chart
-                     .call(d3.axisBottom(this.xScale)); //main method to display the axes
+                     .call(d3.axisBottom(this.xScale)) //main method to display the axes
+        
+        this.svgChart.selectAll("text") //Get all the x labels
+                     .attr("transform", "rotate(-60)")
+                     .attr("dx", "-0.9em")   // shift left
+                     .attr("dy", "0.15em")
+                     .style("text-anchor", "end"); //align the text to the end 
+                     
 
         //Draw the ticks and texts for the y axis
         this.svgChart.append("g")
                      .call(d3.axisLeft(this.yScale) //draw the y axis on the left side
-                             .tickFormat(d3.format("d"))); //ensures that the y labels are only integers (otherwise it is 0.1, 0.2 ... and num questions cannot be decimals)
+                             .tickFormat(d3.format("d")) //ensures that the y labels are only integers (otherwise it is 0.1, 0.2 ... and num questions cannot be decimals)
+                             .ticks(d3.max(this.topicsData, data => data.total))); 
     }
 }
 
