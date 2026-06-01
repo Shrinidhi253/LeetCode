@@ -80,6 +80,7 @@ class Chart {
     topicsData;
     margins;
     xScale; yScale;
+    DYNAMIC_WIDTH; //for making the chart scrollable
 
     constructor(topicsData, chartWidth, chartHeight) {
         this.topicsData = topicsData;
@@ -104,9 +105,11 @@ class Chart {
     }
 
     createSvgChartArea() {
+        this.DYNAMIC_WIDTH = Math.max(this.WIDTH, this.topicsData.length * 80); //80px per bar if there are too many topics
+
         this.svgChart = d3.select("#chart") //get the chart div class
                           .append("svg") //create <svg></svg> element within the div class
-                          .attr("width", this.WIDTH + this.margins.left + this.margins.right) //set chart area width, height
+                          .attr("width", this.DYNAMIC_WIDTH + this.margins.left + this.margins.right) //set chart area width, height
                           .attr("height", this.HEIGHT + this.margins.top + this.margins.bottom)
                           .append("g")
                           .attr("transform", `translate(${this.margins.left}, ${this.margins.top})`);
@@ -115,7 +118,7 @@ class Chart {
     createScales() {
         this.xScale = d3.scaleBand() //for discrete data use scaleBand
                         .domain(this.topicsData.map(data => data.topic)) //domain is the list of topics
-                        .range([0, this.WIDTH]) //span across the whole width
+                        .range([0, this.DYNAMIC_WIDTH]) //span across the whole width
                         .padding(0.2); //space between the bars
 
         this.yScale = d3.scaleLinear() //for continuous numeric values, use scaleLinear
