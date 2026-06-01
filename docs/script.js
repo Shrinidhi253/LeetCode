@@ -81,6 +81,7 @@ class Chart {
     svgChart;
     topicsData;
     margins;
+    xScale; yScale;
 
     constructor(topicsData, chartWidth, chartHeight) {
         this.topicsData = topicsData;
@@ -91,15 +92,8 @@ class Chart {
     displayChart() {
         this.setMargins();
         this.createSvgChartArea();
-    }
-
-    createSvgChartArea() {
-        this.svgChart = d3.select("#chart") //get the chart div class
-                          .append("svg") //create <svg></svg> element within the div class
-                          .attr("width", this.WIDTH + this.margins.left + this.margins.right) //set chart area width, height
-                          .attr("height", this.HEIGHT + this.margins.top + this.margins.bottom)
-                          .append("g")
-                          .attr("transform", `translate(${this.margins.left}, ${this.margins.top})`);
+        this.createScales();
+        this.drawAxes();
     }
 
     setMargins() {
@@ -111,7 +105,36 @@ class Chart {
         }
     }
 
+    createSvgChartArea() {
+        this.svgChart = d3.select("#chart") //get the chart div class
+                          .append("svg") //create <svg></svg> element within the div class
+                          .attr("width", this.WIDTH + this.margins.left + this.margins.right) //set chart area width, height
+                          .attr("height", this.HEIGHT + this.margins.top + this.margins.bottom)
+                          .append("g")
+                          .attr("transform", `translate(${this.margins.left}, ${this.margins.top})`);
+    }
 
+    createScales() {
+        this.xScale = d3.scaleBand() //for discrete data use scaleBand
+                        .domain(this.topicsData.map(data => data.topic)) //domain is the list of topics
+                        .range([0, this.WIDTH]) //span across the whole width
+                        .padding(0.2); //space between the bars
+
+        this.yScale = d3.scaleLinear() //for continuous numeric values, use scaleLinear
+                        .domain([0, d3.max(this.topicsData, data => data.total)]) //min and max values in our data
+                        .range([this.HEIGHT, 0]); //span across the whole height
+    }
+
+    drawAxes() {
+        //Draw the ticks and texts for the x axis
+        this.svgChart.append("g") //Create a group element for the x axis labels
+                     .attr("transform", `translate(0, ${this.HEIGHT})`) //position HEIGHT pixels down on the chart
+                     .call(d3.axisBottom(this.xScale)); //main method to display the axes
+
+        //Draw the ticks and texts for the y axis
+        this.svgChart.append("g")
+                     .call(d3.axisLeft(this.yScale)); //draw the y axis on the left side
+    }
 }
 
 main();
