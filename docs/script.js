@@ -3,6 +3,7 @@ async function main() {
     const stats = await response.json();
 
     displayDifficultySummary(stats["difficultySummary"]);
+    displayChart(stats["topics"])
 
     console.log(stats)
 }
@@ -64,8 +65,38 @@ function flattenTopics(topics) {
         tempDict["total"] = tempDict["easy"] + tempDict["medium"] + tempDict["hard"];
         flattenedTopics.push(tempDict);
     }
-    
+
     return flattenedTopics;
+}
+
+function displayChart(topics) {
+    const topicData = flattenTopics(topics);
+    const chart = new Chart(topicData, 800, 400);
+    chart.displayChart();
+}
+
+class Chart {
+    WIDTH;
+    HEIGHT;
+    svgChart;
+    topicsData;
+
+    constructor(topicsData, chartWidth, chartHeight) {
+        this.topicsData = topicsData;
+        this.WIDTH = chartWidth;
+        this.HEIGHT = chartHeight;
+    }
+
+    displayChart() {
+        this.createSvgChartArea();
+    }
+
+    createSvgChartArea() {
+        this.svgChart = d3.select("#chart") //get the chart div class
+                          .append("svg") //create <svg></svg> element within the div class
+                          .attr("width", this.WIDTH) //set chart area width, height
+                          .attr("height", this.HEIGHT);
+    }
 }
 
 main();
