@@ -80,6 +80,7 @@ class Chart {
     HEIGHT;
     svgChart;
     topicsData;
+    margins;
 
     constructor(topicsData, chartWidth, chartHeight) {
         this.topicsData = topicsData;
@@ -88,15 +89,29 @@ class Chart {
     }
 
     displayChart() {
+        this.setMargins();
         this.createSvgChartArea();
     }
 
     createSvgChartArea() {
         this.svgChart = d3.select("#chart") //get the chart div class
                           .append("svg") //create <svg></svg> element within the div class
-                          .attr("width", this.WIDTH) //set chart area width, height
-                          .attr("height", this.HEIGHT);
+                          .attr("width", this.WIDTH + this.margins.left + this.margins.right) //set chart area width, height
+                          .attr("height", this.HEIGHT + this.margins.top + this.margins.bottom)
+                          .append("g")
+                          .attr("transform", `translate(${this.margins.left}, ${this.margins.top})`);
     }
+
+    setMargins() {
+        this.margins = {
+            top : 20, //temp values for margins for testing purposes. TODO change it later if needed
+            right : 20,
+            bottom : 100,
+            left : 40
+        }
+    }
+
+
 }
 
 main();
