@@ -98,6 +98,7 @@ class Chart {
         this.drawAxes();
         this.addHoverAnimation();
         this.drawBars();
+        this.drawLegend();
     }
 
     setMargins() {
@@ -216,6 +217,28 @@ class Chart {
                                 .attr("class", "hoverAnimation")
                                 .style("position", "fixed")
                                 .style("opacity", 0); //setting opacity to 0 hides the div container by default
+    }
+
+    drawLegend() {
+        const DIFFICULTIES = ["easy", "medium", "hard"];
+        const COLOURS = {"easy" : "#3e984aff", "medium" : "#dbae1dff", "hard" : "#a92d17ff"};
+
+        const legend = d3.select("#legend");
+
+        DIFFICULTIES.forEach(difficulty => {
+            const item = legend.append("div")
+                               .attr("class", "legendItem");
+
+            item.append("div")
+                .attr("class", "legendColour")
+                .style("background-color", COLOURS[difficulty]) //add a coloured rectangle for the legend item
+                .style("width", "16px")    //width of the coloured rectangle
+                .style("height", "12px")   //height of the coloured rectangle
+                .style("display", "inline-block"); //to make the coloured rectangle inline with the difficulty label text
+
+            item.append("span")
+                .text(difficulty.toUpperCase()); //set text for the legend item
+        });
     }
 }
 
