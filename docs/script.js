@@ -93,6 +93,7 @@ class Chart {
         this.createSvgChartArea();
         this.createScales();
         this.drawAxes();
+        this.drawBars();
     }
 
     setMargins() {
@@ -144,6 +145,47 @@ class Chart {
                      .call(d3.axisLeft(this.yScale) //draw the y axis on the left side
                              .tickFormat(d3.format("d")) //ensures that the y labels are only integers (otherwise it is 0.1, 0.2 ... and num questions cannot be decimals)
                              .ticks(d3.max(this.topicsData, data => data.total))); 
+    }
+
+    drawBars() {
+        const DIFFICULTIES = ["easy", "medium", "hard"];
+        const COLOURS = {"easy" : "#3fb950", "medium" : "#d29922", "hard" : "#f85149"};
+
+        let xScale = this.xScale;
+        let yScale = this.yScale;
+
+        //Create a bar group for each topic
+        const groups = this.svgChart.selectAll("g.bar-group") //selects all <g> elements with class bar-group
+                                    .data(this.topicsData) //to bind the topc data to the selected group of bars
+                                    .enter() //gives placeholder slots for not created elements/ bars
+                                    .append("g") //create a group
+                                    .attr("class", "bar-group") //sets class of the group to "bar-group"
+                                    .attr("transform", d => `translate(${this.xScale(d.topic)},0)`); //positions the bar at the x position at the bottom 
+
+        //Create the stacked bars for each group
+        groups.each(function(data) {
+            let offset = 0;
+
+            DIFFICULTIES.forEach(difficulty => {
+                const count = data[difficulty];
+
+                if (count == 0) {
+                    offset += count;
+                    return; //no need to draw bars if the there are no questions solved for this difficulty
+                }
+
+                d3.select(this).append("rect")
+                               .attr("x", 0)
+                               .attr("y", yScale(count + offset)) //the scale is used to map our values to graph appropriate coordinates
+                               .attr("width", xScale.bandwidth())
+                               .attr("height", yScale(0) - yScale(count))
+                               .attr("fill", COLOURS[difficulty]);
+
+                offset += count
+            })
+        })
+
+
     }
 }
 
