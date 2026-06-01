@@ -4,8 +4,6 @@ async function main() {
 
     displayDifficultySummary(stats["difficultySummary"]);
     displayChart(stats["topics"])
-
-    console.log(stats)
 }
 
 function displayDifficultySummary(difficultySummary) {
@@ -133,7 +131,8 @@ class Chart {
 
         //Draw the ticks and texts for the y axis
         this.svgChart.append("g")
-                     .call(d3.axisLeft(this.yScale)); //draw the y axis on the left side
+                     .call(d3.axisLeft(this.yScale) //draw the y axis on the left side
+                             .tickFormat(d3.format("d"))); //ensures that the y labels are only integers (otherwise it is 0.1, 0.2 ... and num questions cannot be decimals)
     }
 }
 
