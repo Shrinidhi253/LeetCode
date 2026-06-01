@@ -81,6 +81,8 @@ class Chart {
     margins;
     xScale; yScale;
     DYNAMIC_WIDTH; //for making the chart scrollable
+    BAR_WIDTH = 15;
+    BAR_PADDING = 0.2;
 
     constructor(topicsData, chartWidth, chartHeight) {
         this.topicsData = topicsData;
@@ -106,7 +108,7 @@ class Chart {
     }
 
     createSvgChartArea() {
-        this.DYNAMIC_WIDTH = Math.max(this.WIDTH, this.topicsData.length * 80); //80px per bar if there are too many topics
+        this.DYNAMIC_WIDTH = this.topicsData.length * (this.BAR_WIDTH / (1 - this.BAR_PADDING));
 
         this.svgChart = d3.select("#chart") //get the chart div class
                           .append("svg") //create <svg></svg> element within the div class
@@ -120,7 +122,7 @@ class Chart {
         this.xScale = d3.scaleBand() //for discrete data use scaleBand
                         .domain(this.topicsData.map(data => data.topic)) //domain is the list of topics
                         .range([0, this.DYNAMIC_WIDTH]) //span across the whole width
-                        .padding(0.2); //space between the bars
+                        .padding(this.BAR_PADDING); //space between the bars
 
         this.yScale = d3.scaleLinear() //for continuous numeric values, use scaleLinear
                         .domain([0, d3.max(this.topicsData, data => data.total)]) //min and max values in our data
@@ -149,7 +151,7 @@ class Chart {
 
     drawBars() {
         const DIFFICULTIES = ["easy", "medium", "hard"];
-        const COLOURS = {"easy" : "#3fb950", "medium" : "#d29922", "hard" : "#f85149"};
+        const COLOURS = {"easy" : "#3e984aff", "medium" : "#dbae1dff", "hard" : "#a92d17ff"};
 
         let xScale = this.xScale;
         let yScale = this.yScale;
@@ -184,8 +186,6 @@ class Chart {
                 offset += count
             })
         })
-
-
     }
 }
 
