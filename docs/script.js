@@ -52,4 +52,20 @@ function displayDifficultySummary(difficultySummary) {
     difficultSummaryClass.appendChild(totalCard);
 }
 
+function flattenTopics(topics) {
+    var flattenedTopics = []
+    for (const topic in topics) {
+        var tempDict = {"topic" : topic};
+
+        for (const difficulty in topics[topic]) {
+            tempDict[difficulty] = topics[topic][difficulty];
+        }
+
+        tempDict["total"] = tempDict["easy"] + tempDict["medium"] + tempDict["hard"];
+        flattenedTopics.push(tempDict);
+    }
+    
+    return flattenedTopics;
+}
+
 main();
