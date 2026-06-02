@@ -34,16 +34,23 @@ The following method categorises all closed issues by topics and returns a dicti
 as key and number of easy, medium, hard questions solved in this topic as value
 """
 def categorise_closed_issues(all_closed_issues):
-    stats = {} #stores stats in the format: {topic : {easy : int, medium : int, hard : int}}
+
+    stats = {
+        "difficultySummary" : {"easy" : 0, "medium" : 0, "hard" : 0},
+        "topics" : {}  #format : {topicA : {"easy" : int, "medium" : int, "hard" : int}}
+    }
 
     for issue in all_closed_issues:
         difficulty, topics = get_labels(issue)
+        
+        if difficulty:
+            stats["difficultySummary"][difficulty] += 1
 
         for topic in topics: #increment count of questions solved for a difficulty level in this topic
-            if topic not in stats:
-                stats[topic] = {"easy" : 0, "medium" : 0, "hard" : 0}
+            if topic not in stats["topics"]:
+                stats["topics"][topic] = {"easy" : 0, "medium" : 0, "hard" : 0}
             if difficulty:
-                stats[topic][difficulty] += 1
+                stats["topics"][topic][difficulty] += 1
 
     return stats
 
