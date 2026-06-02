@@ -26,8 +26,8 @@ function displayDifficultySummary(difficultySummary) {
         difficultyCount.textContent = difficultySummary[difficulty];
 
         //Add the cards to the div class
-        difficultyCard.appendChild(difficultyLabel);
         difficultyCard.appendChild(difficultyCount);
+        difficultyCard.appendChild(difficultyLabel);
         difficultSummaryClass.appendChild(difficultyCard);
 
         //count total questions solved
@@ -46,8 +46,8 @@ function displayDifficultySummary(difficultySummary) {
     totalLabel.textContent = "TOTAL";
     totalCount.textContent = total;
 
-    totalCard.appendChild(totalLabel);
     totalCard.appendChild(totalCount);
+    totalCard.appendChild(totalLabel);
     difficultSummaryClass.appendChild(totalCard);
 }
 
