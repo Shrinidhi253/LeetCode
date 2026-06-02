@@ -22,7 +22,7 @@ function displayDifficultySummary(difficultySummary) {
         difficultyCount.className = "difficultyCount";
 
         //Set texts
-        difficultyLabel.textContent = difficulty.toUpperCase();
+        difficultyLabel.textContent = toTitleCase(difficulty);
         difficultyCount.textContent = difficultySummary[difficulty];
 
         //Add the cards to the div class
@@ -43,7 +43,7 @@ function displayDifficultySummary(difficultySummary) {
     totalLabel.className = "totalLabel";
     totalCount.className = "totalCount";
 
-    totalLabel.textContent = "TOTAL";
+    totalLabel.textContent = "Total";
     totalCount.textContent = total;
 
     totalCard.appendChild(totalCount);
@@ -256,9 +256,14 @@ class Chart {
                 .style("display", "inline-block"); //to make the coloured rectangle inline with the difficulty label text
 
             item.append("span")
-                .text(difficulty.toUpperCase()); //set text for the legend item
+                .text(toTitleCase(difficulty)); //set text for the legend item
         });
     }
+}
+
+//Helper
+function toTitleCase(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
 main();
