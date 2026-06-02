@@ -64,6 +64,7 @@ function flattenTopics(topics) {
         flattenedTopics.push(tempDict);
     }
 
+    flattenedTopics.sort((a, b) => a.topic.localeCompare(b.topic)); //sort the topics alphabetically before returning
     return flattenedTopics;
 }
 
