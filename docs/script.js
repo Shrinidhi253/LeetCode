@@ -217,7 +217,7 @@ class Chart {
               .style("left", (event.clientX + 14) + "px") //14px left of the bar
               .style("top", (event.clientY - 10) + "px") //10 px above the bar
               .html(`
-                <strong>${data.topic}</strong><br>
+                <strong>${toTitleCase(data.topic)}</strong><br>
                 Easy: ${data.easy}<br> 
                 Medium: ${data.medium}<br>
                 Hard: ${data.hard}<br>
