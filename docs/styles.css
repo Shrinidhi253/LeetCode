@@ -62,6 +62,26 @@ p {
 .hardLabel {color: #a92d17ff; font-size: 16px; font-weight: 700; margin-top: 4px;}
 .totalLabel {color : #1a1a1a; font-size: 16px; font-weight: 700; margin-top: 4px;}
 
+/*Styling the legend*/
+#legend {
+    display: flex;
+    gap: 1.25rem;
+    margin: 0.75rem 0 1rem;
+    align-items: center;
+}
+
+.legendItem {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.legendColour {
+    border-radius: 2px;
+}
+
 #chartContainer {
     overflow-x: auto;
     width: 800px;
