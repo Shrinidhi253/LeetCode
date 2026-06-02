@@ -147,8 +147,9 @@ class Chart {
 
         //X axis label
         this.svgChart.append("text")
-                     .attr("x", this.DYNAMIC_WIDTH + this.margins.left + 12)
-                     .attr("y", this.HEIGHT + 3)
+                     .attr("x", this.DYNAMIC_WIDTH / 2)   // center it
+                     .attr("y", this.HEIGHT + this.margins.bottom - 10)  // bottom of the chart
+                     .style("text-anchor", "middle")
                      .style("text-anchor", "middle")
                      .text("Topics I have solved")
                      .style("font-size", '12px')
