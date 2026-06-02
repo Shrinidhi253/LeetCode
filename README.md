@@ -2,10 +2,20 @@
 
 This repo contains my solutions to leetcode problems, which are organised and tracked using git workflows.
 
-## Stats and Topics solved
-**Programming languages used:** Java
+- [Stats and topics solved](#stats-and-topics-solved)
+- [How this repo documents progress](#how-this-repo-documents-progress)
+    - [Issues](#1-issues)
+    - [Branches and PRs](#2-branches-and-prs)
+    - [Afterthoughts & PR comments](#3-afterthoughts--pr-comments)
+    - [Solutions improving over time](#4-solutions-improving-over-time)
+    - [GitHub Actions](#5-github-actions)
+- [Repo/ File structure](#repo-file-structure)
 
-## How this repo documents progress:
+## Stats and Topics solved
+**Programming languages used:** Java <br>
+**Topic-wise and Difficulty-wise statistics:** [View solutions stats](https://shrinidhi253.github.io/LeetCode/)
+
+## How this repo documents progress
 
 ### 1. Issues
 Every leetcode problem is opened as a Github issue containing the:
