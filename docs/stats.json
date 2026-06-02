@@ -1,0 +1,64 @@
+{
+    "difficultySummary": {
+        "easy": 1,
+        "medium": 4,
+        "hard": 1
+    },
+    "topics": {
+        "string": {
+            "easy": 0,
+            "medium": 3,
+            "hard": 0
+        },
+        "two pointers": {
+            "easy": 0,
+            "medium": 1,
+            "hard": 0
+        },
+        "dynamic programming": {
+            "easy": 0,
+            "medium": 1,
+            "hard": 0
+        },
+        "arrays": {
+            "easy": 1,
+            "medium": 0,
+            "hard": 1
+        },
+        "binary search": {
+            "easy": 0,
+            "medium": 0,
+            "hard": 1
+        },
+        "divide and conquer": {
+            "easy": 0,
+            "medium": 0,
+            "hard": 1
+        },
+        "hash tables": {
+            "easy": 1,
+            "medium": 1,
+            "hard": 0
+        },
+        "sliding window": {
+            "easy": 0,
+            "medium": 1,
+            "hard": 0
+        },
+        "linked list": {
+            "easy": 0,
+            "medium": 1,
+            "hard": 0
+        },
+        "math": {
+            "easy": 0,
+            "medium": 1,
+            "hard": 0
+        },
+        "recursion": {
+            "easy": 0,
+            "medium": 1,
+            "hard": 0
+        }
+    }
+}
