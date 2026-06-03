@@ -1,10 +1,15 @@
 {
     "difficultySummary": {
-        "easy": 1,
+        "easy": 2,
         "medium": 4,
         "hard": 1
     },
     "topics": {
+        "math": {
+            "easy": 1,
+            "medium": 1,
+            "hard": 0
+        },
         "string": {
             "easy": 0,
             "medium": 3,
@@ -46,11 +51,6 @@
             "hard": 0
         },
         "linked list": {
-            "easy": 0,
-            "medium": 1,
-            "hard": 0
-        },
-        "math": {
             "easy": 0,
             "medium": 1,
             "hard": 0
