@@ -69,4 +69,35 @@ public class PalindromeNumber_9 {
         System.out.println("Reverse num: " + reverseNum);
         return reverseNum == x;
     }
+
+    /*
+    Idea: Solution2 performed worse than Solution1 likely because of the conversions
+    between float and integer and performing log and exponentiation on floats and then converting them
+    to integers.
+
+    So remove the float and log operations
+    the log operation was to get the number of digits to calculate degree
+
+    degree (power of 10) of the reversed number increases by 1 every iteration
+    e.g. 123
+    iteration 1 = 3 -> degree = 0
+    iteration 2 = 3 * 10^1 + 2 = 32 -> degree = 1
+    iteration 3 = 300 * 10^2 + 20 + 1 = 32 * 10 + 1 -> degree = 2
+
+    so we can multiply the current reversed num by 10 every iteration and add the digit without
+    having to keep track of the number of digits left
+    */
+    public boolean isPalindromeSolution3(int x) {
+        if (x < 0) {return false;}
+        if (x < 10) {return true;}
+
+        long reversedNum = 0;
+        int i = x;
+        while (i > 0) {
+            int digit = i % 10;
+            reversedNum = reversedNum * 10 + digit;
+            i /= 10;
+        }
+        return x == reversedNum;
+    }
 }
