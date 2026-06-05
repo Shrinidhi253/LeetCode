@@ -5,6 +5,49 @@ import java.util.Comparator;
 
 public class LongestCommonPrefix_14 {
     /*
+    Improvement idea:
+    In the previous solution, we technically use only the shortest string length
+    There is no need to sort the whole array which would be O(nlogn) since the official java
+    implementation seems to be using merge sort
+
+    m = find shortest string length
+    compare ith index for all strings (including the shortest string whose position in the array doesn't matter)
+    */
+    public String longestCommonPrefixSolution3(String[] strs) {
+        //remove array sorting
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        int n = strs.length; //n = length of array
+        int m = findShortestStringLength(strs); //just use the shortest string length
+
+        int i = 0;
+        while (i < m) {
+            Character charAtShortestStr = strs[0].charAt(i);
+
+            for  (int j = 0; j < n; j++) {
+                if (strs[j].charAt(i) != charAtShortestStr) {
+                    return stringBuilder.toString() ;
+                }
+            }
+            stringBuilder.append(charAtShortestStr);
+            i++;
+        }
+        return stringBuilder.toString();
+    }
+
+    private int findShortestStringLength(String[] strs) {
+        int shortestLength = strs[0].length();
+
+        for (int i = 0; i < strs.length; i++) {
+            if (strs[i].length() < shortestLength) {
+                shortestLength = strs[i].length();
+            }
+        }
+        return shortestLength;
+    }
+
+    /*
     Improvement idea: the inner while loop compares the same strings again and again redundantly
     e.g. if we had "race", "racket", "raven"
     when we do the first iteration, we would compare the substrings "race", "rack", "rave"
