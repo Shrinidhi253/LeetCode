@@ -5,6 +5,46 @@ import java.util.Comparator;
 
 public class LongestCommonPrefix_14 {
     /*
+    Improvement idea: the inner while loop compares the same strings again and again redundantly
+    e.g. if we had "race", "racket", "raven"
+    when we do the first iteration, we would compare the substrings "race", "rack", "rave"
+    When we do the comparison we would know that the last index does not match for rack and the last 2 indices don't match for "rave"
+
+    but again, in the next iteration we compare, "rac", "rac", "rav"
+
+    To avoid these redundant comparisons,
+    for index 0, 1, ... shortest_string.length:
+        get shortest_string_char
+        compare char at index for all other strings
+        if all strings have the same char at index:
+            check for next index
+        else:
+            return substring up to current index as the longest prefix
+    */
+    public String longestCommonPrefixSolution2(String[] strs) {
+        sortByLength(strs);
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        int n = strs.length; //n = length of array
+        int m = strs[0].length(); //m = length of shortest string
+
+        int i = 0;
+        while (i < m) {
+            Character charAtShortestStr = strs[0].charAt(i);
+
+            for  (int j = 1; j < n; j++) {
+                if (strs[j].charAt(i) != charAtShortestStr) {
+                    return stringBuilder.toString() ;
+                }
+            }
+            stringBuilder.append(charAtShortestStr);
+            i++;
+        }
+        return stringBuilder.toString();
+    }
+
+    /*
     e.g. [racecar, racer, race]
     The longest possible prefix is the shortest string "race"
     Other possible suffixes are parts of the shortest string, like "rac", "ra", "r"
