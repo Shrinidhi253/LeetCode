@@ -2,11 +2,40 @@ package medium;
 
 public class ContainerWithMostWater_11 {
     /*
+    Idea: Checking all combinations is redundant
+    If left height = 1, right = 9
+    It is almost certain that any combination of area with 1, like 1x11, 1x10, 1x2, etc is not likely to be the max area
+    when 9x11, 9x10, 9x2 exists
+    So check for other heights
+    i.e. if the left height is shorter -> check area for current right and next left
+    if the right height is shorter -> check area for current left and next right
+    */
+    public int maxAreaSolution2(int[] height) {
+        int maxArea = 0;
+        int left = 0;
+        int right = height.length - 1;
+
+        while (left < right) {
+            int area = (right - left) * Math.min(height[left], height[right]);
+            if (area > maxArea) {
+                maxArea = area;
+            }
+
+            //try the next left value to hopefully get a larger area
+            if (height[left] < height[right]) { left++; }
+
+            //same. try the next right to hopefully get a larger area
+            else { right--; }
+        }
+        return maxArea;
+    }
+
+    /*
     Idea: Check every combination of right and left x
     Get the min height out of the 2
     Calculate the area and update the max area if the current calculated is larger
     */
-    public int maxArea(int[] height) {
+    public int maxAreaSolution1(int[] height) {
         return maxAreaHelper(height, 0, height.length - 1, 0);
     }
 
