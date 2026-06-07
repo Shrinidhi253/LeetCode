@@ -31,15 +31,17 @@ public class RegexMatching_10 {
 
         if (pIndex == p.length()) {return false;} //exhausted the regex without fully matching the string
 
+        //1 char match if they are the same characters or p char is a '.'
+        boolean charsMatch = s.charAt(sIndex) == p.charAt(pIndex) || p.charAt(pIndex) == '.';
+
         if (pIndex + 1 < p.length() && p.charAt(pIndex + 1) == '*') {
             return (isMatchHelper(s, p, sIndex, pIndex + 2) || //Assume 0 match and check next characters
-                    ((s.charAt(sIndex) == p.charAt(pIndex) || p.charAt(pIndex) == '.') && //1 char match if they are the same characters or p char is a '.'
-                            isMatchHelper(s, p, sIndex + 1, pIndex)) //1 match and check for the next possible matches
+                    (charsMatch && isMatchHelper(s, p, sIndex + 1, pIndex)) //1 match and check for the next possible matches
                 );
         }
 
         //If none of the above cases were called, then s char and p char are normal characters or p char is a dot (wild character)
-        if (s.charAt(sIndex) == p.charAt(pIndex) || p.charAt(pIndex) == '.') { //if they are same, check for next matches
+        if (charsMatch) { //if they are same, check for next matches
             return isMatchHelper(s, p, sIndex + 1, pIndex + 1);
         }
         else return false; //if they are not same, match failed. return false
