@@ -2,7 +2,7 @@
     "difficultySummary": {
         "easy": 3,
         "medium": 5,
-        "hard": 1
+        "hard": 2
     },
     "topics": {
         "arrays": {
@@ -30,13 +30,18 @@
             "medium": 1,
             "hard": 0
         },
-        "math": {
-            "easy": 1,
+        "recursion": {
+            "easy": 0,
             "medium": 1,
-            "hard": 0
+            "hard": 1
         },
         "dynamic programming": {
             "easy": 0,
+            "medium": 1,
+            "hard": 1
+        },
+        "math": {
+            "easy": 1,
             "medium": 1,
             "hard": 0
         },
@@ -61,11 +66,6 @@
             "hard": 0
         },
         "linked list": {
-            "easy": 0,
-            "medium": 1,
-            "hard": 0
-        },
-        "recursion": {
             "easy": 0,
             "medium": 1,
             "hard": 0
