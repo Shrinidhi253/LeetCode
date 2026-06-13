@@ -38,7 +38,7 @@ class IntegerToRomanSolution1_12 {
         get the closest power of 10 (for e.g for 9 get 10, for 90 get 100, ..)
         subtract the immediate lower powers of 10 from it
         for 9, subtract 10^0 (10 - 1)
-        for 90, subtract 10^1 (100 - 1)
+        for 90, subtract 10^1 (100 - 10)
 
     additive rule:
     if digit > 5:
@@ -131,7 +131,7 @@ class IntegerToRomanSolution1_12 {
         return pow(10,weight + 1);
     }
 
-    //pairwise mapping of the integers to their roman characters sorted in descending order
+    //pairwise mapping of the integers to their roman characters
     unordered_map<int, string> createRomanIntMap() {
         unordered_map<int, string> romanIntMap = {
             {1000, "M"}, {500, "D"}, {100, "C"},
@@ -231,7 +231,7 @@ class IntegerToRomanSolution2_12 {
         return weight * 10;
     }
 
-    //pairwise mapping of the integers to their roman characters sorted in descending order
+    //pairwise mapping of the integers to their roman characters
     unordered_map<int, string> createRomanIntMap() {
         unordered_map<int, string> romanIntMap = {
             {1000, "M"}, {500, "D"}, {100, "C"},
