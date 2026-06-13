@@ -6,7 +6,7 @@
 
 using namespace std;
 
-class IntegerToRoman_12 {
+class IntegerToRomanSolution1_12 {
     /*
     Idea:
     Deal with "num" as multiples of 10 as they are easier to construct
@@ -87,7 +87,7 @@ class IntegerToRoman_12 {
         const int subtrahend = pow(10,weight); //the number that you are subtracting
 
         if (digit == 4) {minuend = this->getClosestNumStartingWith5(weight);} //for 4, subtract from num starting with 5
-        else {minuend = this->getClosestPowerof10(digit, weight);} //for 9, subtract from power of 10
+        else {minuend = this->getClosestPowerOf10(digit, weight);} //for 9, subtract from power of 10
 
         string roman = romanIntMap[subtrahend] + romanIntMap[minuend];
         return roman;
@@ -102,7 +102,7 @@ class IntegerToRoman_12 {
             iterations = digit - 5;
         }
         else {
-            baseAddend = this->getClosestPowerof10(digit, weight);
+            baseAddend = this->getClosestPowerOf10(digit, weight);
             iterations = digit - 1;
         }
 
@@ -123,13 +123,112 @@ class IntegerToRoman_12 {
         return 5 * pow(10,weight);
     }
 
+    //closest power of 10 will have
+    //  same place value weight if number is < 5 (e.g. 10 and 20, 30, 40)
+    //  one place value weight higher if number is > 5 (e.g 100 and 60, 70, 80)
+    int getClosestPowerOf10(int digit, int weight) {
+        if (digit < 5) {return pow(10,weight);}
+        return pow(10,weight + 1);
+    }
+
+    //pairwise mapping of the integers to their roman characters sorted in descending order
+    unordered_map<int, string> createRomanIntMap() {
+        unordered_map<int, string> romanIntMap = {
+            {1000, "M"}, {500, "D"}, {100, "C"},
+            {50, "L"}, {10, "X"}, {5, "V"}, {1, "I"},
+        };
+        return romanIntMap;
+    }
+};
+
+class IntegerToRomanSolution2_12 {
+    unordered_map<int, string> romanIntMap;
+    /*
+    Idea:
+    -> remove all the pow() operations.
+    -> The pow() operations have to be done because we are tracking the exponents of 10 (like 2 for 10^2)
+       and then performing the exponentiation operation.
+    -> We could avoid this redundancy and just directly track the power of 10 value (like 100, 1000, etc).
+    -> Instead of increasing the exponent value by 1 every iteration, we multiply it by 10
+
+    -> Make romanIntMap a class attribute since all methods are using it. Create it in the constructor.
+    */
+    public:
+    IntegerToRomanSolution2_12() {
+        romanIntMap = this->createRomanIntMap();
+    }
+    string intToRoman(int num) {
+        string roman = "";
+        int weight = 1; //store weight as the power of 10 and not just the exponent (e.g. 100 instead of 2 for 10^2)
+
+        while (num > 0) {
+            int digit = num % 10;
+
+            if (digit == 1 || digit == 5) {
+                roman = romanIntMap[digit * weight] + roman;
+            }
+            else if (digit == 4 || digit == 9) {
+                roman = this->handleSubtractiveCase(digit, weight) + roman;
+            }
+            else if (digit != 0) {
+                roman = this->handleAdditiveCase(digit, weight) + roman;
+            }
+
+            weight *= 10; //Weight of the next digit is multiplied by 10
+            num /= 10;
+        }
+        return roman;
+    }
+
+    //Cases for constructing the roman
+    private:
+    string handleSubtractiveCase(int digit, int weight) {
+        int minuend;
+        //REMOVED SUBTRAHEND: the number that you are subtracting is the power of 10, which is now the weight
+
+        if (digit == 4) {minuend = this->getClosestNumStartingWith5(weight);}
+        else {minuend = this->getClosestPowerOf10(digit, weight);}
+
+        string roman = romanIntMap[weight] + romanIntMap[minuend];
+        return roman;
+    }
+
+
+    string handleAdditiveCase(int digit, int weight) {
+        int baseAddend;
+        int iterations; //the number of times you have to add powers of 10 to the base addend
+        if (digit > 5) {
+            baseAddend = this->getClosestNumStartingWith5(weight);
+            iterations = digit - 5;
+        }
+        else {
+            baseAddend = this->getClosestPowerOf10(digit, weight);
+            iterations = digit - 1;
+        }
+
+        string roman = romanIntMap[baseAddend];
+
+        //pow10Addend will be the weight
+        for (int i = 0; i < iterations; i++) {
+            roman += romanIntMap[weight];
+        }
+        return roman;
+    }
+
+
+    //closest number starting with 5 will have the same place value weight as the number
+    //e.g. 40 and 50 both have the same weight 1 (10^1)
+    //so closestNumStartingWith5(num, weight) = 5 * 10^weight
+    int getClosestNumStartingWith5(int weight) {
+        return 5 * weight;
+    }
 
     //closest power of 10 will have
     //  same place value weight if number is < 5 (e.g. 10 and 20, 30, 40)
     //  one place value weight higher if number is > 5 (e.g 100 and 60, 70, 80)
-    int getClosestPowerof10(int digit, int weight) {
-        if (digit < 5) {return pow(10,weight);}
-        return pow(10,weight + 1);
+    int getClosestPowerOf10(int digit, int weight) {
+        if (digit < 5) {return weight;}
+        return weight * 10;
     }
 
     //pairwise mapping of the integers to their roman characters sorted in descending order
