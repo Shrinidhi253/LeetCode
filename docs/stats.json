@@ -1,7 +1,7 @@
 {
     "difficultySummary": {
         "easy": 3,
-        "medium": 5,
+        "medium": 6,
         "hard": 2
     },
     "topics": {
@@ -12,12 +12,22 @@
         },
         "string": {
             "easy": 1,
-            "medium": 3,
+            "medium": 4,
             "hard": 0
         },
         "trie": {
             "easy": 1,
             "medium": 0,
+            "hard": 0
+        },
+        "hash tables": {
+            "easy": 1,
+            "medium": 2,
+            "hard": 0
+        },
+        "math": {
+            "easy": 1,
+            "medium": 2,
             "hard": 0
         },
         "two pointers": {
@@ -40,11 +50,6 @@
             "medium": 1,
             "hard": 1
         },
-        "math": {
-            "easy": 1,
-            "medium": 1,
-            "hard": 0
-        },
         "binary search": {
             "easy": 0,
             "medium": 0,
@@ -54,11 +59,6 @@
             "easy": 0,
             "medium": 0,
             "hard": 1
-        },
-        "hash tables": {
-            "easy": 1,
-            "medium": 1,
-            "hard": 0
         },
         "sliding window": {
             "easy": 0,
