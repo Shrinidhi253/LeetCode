@@ -1,6 +1,6 @@
 # LeetCode
 
-This repo contains my solutions to leetcode problems, which are organised and tracked using git workflows.
+This repository contains my solutions to leetcode problems, which are organised and tracked using git workflows.
 
 - [Stats and topics solved](#stats-and-topics-solved)
 - [How this repo documents progress](#how-this-repo-documents-progress)
@@ -9,13 +9,13 @@ This repo contains my solutions to leetcode problems, which are organised and tr
     - [Afterthoughts & PR comments](#3-afterthoughts--pr-comments)
     - [Solutions improving over time](#4-solutions-improving-over-time)
     - [GitHub Actions](#5-github-actions)
-- [Repo/ File structure](#repo-file-structure)
+- [Repository/ File structure](#repository-file-structure)
 
 ## Stats and Topics solved
-**Programming languages used:** Java <br>
+**Programming languages used:** Java, C++ <br>
 **Topic-wise and Difficulty-wise statistics:** [View solutions stats](https://shrinidhi253.github.io/LeetCode/)
 
-## How this repo documents progress
+## How this repository documents progress
 
 ### 1. Issues
 Every leetcode problem is opened as a Github issue containing the:
@@ -38,6 +38,7 @@ For smaller afterthoughts, just a pseudocode or a description of the improvement
 Each **solution** is in a class named using the convention: `ProblemTitle_ProblemNumber`.
 
 If a solution has been improved over time, each version is preserved as a method within the class using the naming convention `problemMethodSolution1`, `problemMethodSolution2` ... and so on to **document the full thinking process** as much as possible.
+In C++, the different solutions are also sometimes separated in classes `ProblemTitleSolution1_ProblemNumber`, `ProblemTitleSolution2_ProblemNumber` and so on for better readability.
 
 ### 5. GitHub Actions
 The repository also uses GitHub automated workflows to automatically update the statistics of the questions solved.
@@ -50,21 +51,28 @@ When an issue for a problem is closed: <br>
 
 
 
-## Repo/ File structure
+## Repository/ File structure
 ```
-└── .github         #contains the workflow scripts
+└── .github                         #contains the workflow scripts
     ├── scripts/ build_stats.py
     └── workflows/ update_stats.yml  
+    
+└── cpp                             #solutions in c++ 
+    └── src                         
+        ├── easy        
+        ├── hard        
+        └── medium
 
-└── docs            #code for "GitHub Pages" for the topic stats
+└── docs                            #code for "GitHub Pages" for the topic stats
     ├── index.html
     ├── script.js
     ├── stats.json
     └── styles.css
-
-└── src             #contains the solutions
-    ├── easy        
-    ├── hard        
-    ├── helper      #helper classes part of the problem
-    └── medium
+        
+└── java                            #solutions in java 
+    └── src                         
+        ├── easy        
+        ├── hard        
+        ├── helper                  #helper classes part of the problem
+        └── medium
 ```
